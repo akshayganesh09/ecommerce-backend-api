@@ -20,6 +20,8 @@ model User {
   role      Role      @default(USER)
   orders    Order[]
   createdAt DateTime  @default(now())
+
+  @@map("User") // Add this! This tells Prisma to look for "User" (Capital U)
 }
 
 enum Role {
@@ -32,6 +34,8 @@ model Category {
   name      String
   products  Product[]
   createdAt DateTime  @default(now())
+
+  @@map("Category")
 }
 
 model Product {
@@ -44,6 +48,8 @@ model Product {
   category    Category   @relation(fields: [categoryId], references: [id])
   orderItems  OrderItem[]
   createdAt   DateTime   @default(now())
+
+  @@map("Product")
 }
 
 model Order {
@@ -54,6 +60,8 @@ model Order {
   status      OrderStatus     @default(PENDING)
   items       OrderItem[]
   createdAt   DateTime        @default(now())
+
+  @@map("Order")
 }
 
 model OrderItem {
@@ -65,6 +73,8 @@ model OrderItem {
 
   order     Order    @relation(fields: [orderId], references: [id])
   product   Product  @relation(fields: [productId], references: [id])
+
+  @@map("OrderItem")
 }
 
 enum OrderStatus {
