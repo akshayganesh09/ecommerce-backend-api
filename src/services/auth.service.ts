@@ -3,7 +3,7 @@ import { prisma } from "../config/db"
 import { generateToken } from "../utils/jwt";
 import { AppError } from "../utils/AppError.util";
 
-export const registerUser = async (email: string, password: string) => {
+export const registerUser = async (email: string, password: string, role: "USER" | "ADMIN" = "USER") => {
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
 
@@ -12,12 +12,12 @@ export const registerUser = async (email: string, password: string) => {
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log(hashedPassword);
 
     const user = await prisma.user.create({
         data: {
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            role: role
         }
     });
 
