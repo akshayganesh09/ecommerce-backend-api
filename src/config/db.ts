@@ -1,7 +1,7 @@
 import { Pool } from "pg";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../generated/prisma";
-import { env } from "./env"; // Importing your env config
+import { env } from "./env";
 
 // 1. Create a connection pool using your URL
 const pool = new Pool({ connectionString: env.databaseUrl });
