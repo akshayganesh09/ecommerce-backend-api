@@ -11,4 +11,40 @@ export class CategoryService{
 
         return categoryRepository.create(data);
     }
+
+    async getAllCategory() {
+        return categoryRepository.findAll();
+    }
+
+    async getCategoryById(id: string) {
+        const result = await categoryRepository.findById(id);
+
+        if(!result) {
+            throw new AppError("Category not found", 404);
+        }
+
+        return result;
+    }
+
+    async updateCategory(id: string, data: any) {
+        const category = await categoryRepository.findById(id);
+
+        if (!category) {
+            throw new AppError("category not found", 404);
+        }
+
+        const result = await categoryRepository.update(id, data);
+        return result;
+    }
+
+    async deleteCategory(id: string) {
+        const category = await categoryRepository.findById(id);
+
+        if (!category) {
+            throw new AppError("category not found", 404);
+        }
+
+        const result = await categoryRepository.delete(id);
+        return result;
+    }
 }
