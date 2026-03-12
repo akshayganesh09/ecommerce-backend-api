@@ -21,4 +21,41 @@ export class ProductService {
 
     return productRepository.create(data);
   }
+
+  async findAllProduct() {
+    const products = productRepository.findAll();
+    return products;
+  }
+
+  async findProductById(id: string) {
+    const product = await productRepository.findById(id);
+
+    if (!product) {
+      throw new AppError("Product not found", 404);
+    }
+
+    return product;
+  }
+
+  async updateProduct(id: string, data: any) {
+    const product = await productRepository.findById(id);
+
+    if (!product) {
+      throw new AppError("Product not found", 404);
+    }
+
+    const result = await productRepository.update(id, data);
+    return result;
+  }
+
+  async deleteProduct(id: string) {
+    const product = await productRepository.findById(id);
+
+    if (!product) {
+      throw new AppError("Product not found", 404);
+    }
+
+    const result = await productRepository.delete(id);
+    return result;
+  }
 }
