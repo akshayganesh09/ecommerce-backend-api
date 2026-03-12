@@ -10,12 +10,19 @@ export class ProductRepository {
         });
     }
 
-    async findAll() {
-        return prisma.product.findMany({
+    async findAll(page: number = 1, limit: number = 10) {
+        const skip = (page - 1) * limit;
+
+        const products =  await prisma.product.findMany({
+            skip,
+            take: limit,
             include: {
                 category: true
             }
         });
+
+        const total = await prisma.product.count();
+        return { products, total };
     }
 
     async findById(id: string) {

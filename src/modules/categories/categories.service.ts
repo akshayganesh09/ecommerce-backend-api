@@ -9,11 +9,11 @@ export class CategoryService{
             throw new AppError("Category name is required", 400);
         }
 
-        return categoryRepository.create(data);
+        return await categoryRepository.create(data);
     }
 
     async getAllCategory() {
-        return categoryRepository.findAll();
+        return await categoryRepository.findAll();
     }
 
     async getCategoryById(id: string) {
