@@ -19,11 +19,11 @@ export class ProductService {
       throw new AppError("Category not found", 404);
     }
 
-    return productRepository.create(data);
+    return await productRepository.create(data);
   }
 
-  async findAllProduct() {
-    const products = productRepository.findAll();
+  async findAllProduct(page?: number, limit?: number) {
+    const products = await productRepository.findAll(page, limit);
     return products;
   }
 

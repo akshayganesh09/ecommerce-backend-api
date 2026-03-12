@@ -15,10 +15,13 @@ export class ProductController {
     }
 
     async findAll(req: Request, res: Response, next: NextFunction) {
-        try {
-            const result = await productService.findAllProduct();
+        const page: number = Number(req.query.page) || 1;
+        const limit: number = Number(req.query.limit) || 10;
 
-            res.status(200).json({ message: "Product fetched successfully", product: result });
+        try {
+            const { products, total } = await productService.findAllProduct(page, limit);
+
+            res.status(200).json({ message: "Product fetched successfully", page, limit, total, product: products });
         } catch (error) {
             next(error);
         }
