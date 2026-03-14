@@ -17,7 +17,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
 
         const decode: any = jwt.verify(token, env.jwtSecret);
 
-        const user = await prisma.user.findUnique({ where: { id: decode?.userId }});
+        const user = await prisma.user.findUnique({ where: { id: decode.userId }});
 
         if (!user) {
             throw new AppError("User not found", 404);

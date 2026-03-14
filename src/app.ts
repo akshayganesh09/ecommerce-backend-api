@@ -1,8 +1,7 @@
 import express from "express";
 import authRoutes from "./routes/auth.routes";
-import productRoutes from "./modules/products/products.routes";
-import categoryRoutes from "./modules/categories/categories.routes";
-import orderRoutes from "./modules/orders/order.routes";
+import v1Routes from "./routes/v1.routes";
+import healthRoutes from "./health/health.routes";
 import helmet from "helmet";
 import morgan from "morgan";
 
@@ -22,13 +21,10 @@ app.use(httpLogger);
 app.use("/api", apiLimiter);
 
 app.use("/auth", authRoutes);
-app.use("/api/categories", categoryRoutes);
-app.use("/api/products", productRoutes);
-app.use("/api/orders", orderRoutes)
 
-app.get("/health", (req: any, res: any) => {
-    res.json({ message: "API is running..."})
-});
+app.use("/api/v1", v1Routes);
+
+app.use("/health", healthRoutes);
 
 app.use(errorMiddleware);
 
